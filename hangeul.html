@@ -41,7 +41,8 @@
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
             color: #888;
-            font-size: 22px; pointer-events: none;
+            font-size: 26px; pointer-events: none;
+            letter-spacing: -0.5px;
             text-align: center; line-height: 1.6;
         }
 
@@ -85,7 +86,7 @@
 
         /* [3] 하단 도크 영역 */
         #dock {
-            width: 100%; height: 260px; 
+            width: 100%; height: 270px;
             background: #F1F5F9;
             display: flex; flex-direction: column;
             padding: 15px 30px; box-sizing: border-box;
@@ -101,7 +102,10 @@
         }
 
         .jamo-row { display: flex; gap: 6px; flex-wrap: wrap; }
-        .jamo-label { font-size: 13px; color: #64748B; font-weight: bold; margin-bottom: 4px; }
+        .jamo-label { font-size: 16px; color: #64748B; font-weight: bold; margin-bottom: 6px; }
+        .jamo-group-wrapper { display: flex; flex-direction: row; align-items: flex-start; gap: 10px; }
+        .jamo-subgroup { display: flex; flex-direction: column; }
+        .jamo-divider { width: 1px; background: var(--border-gray); height: 48px; align-self: flex-end; flex-shrink: 0; }
 
         .jamo-item {
             width: 48px; height: 48px; background: white;
@@ -124,14 +128,48 @@
         button {
             padding: 12px 24px; border-radius: 30px; font-weight: 800;
             font-size: 16px; cursor: pointer; transition: 0.2s;
+            font-family: 'NanumSquareRound', sans-serif;
         }
 
-        .btn-clear { background: var(--main-orange); color: #fff; border: none; }
-        .btn-save { background: #fff; color: var(--text-black); border: 1px solid #dcdcdc; }
-        .btn-history { background: #E2E8F0; border: none; color: #475569; padding: 10px 18px; font-size: 14px; }
+        .btn-clear { background: #ff4600; color: #fff; border: none; box-shadow: 0px 5px 10px #FF46004D; font-size: 20px; font-weight: 700; height: 52px; }
+        .btn-save { background: #fff; color: var(--text-black); border: 1px solid #dcdcdc; font-weight: 700; }
+        .btn-history { background: #ffffff; border: 1px solid #dcdcdc; color: #475569; padding: 12px 24px; font-size: 20px; font-weight: 700; box-shadow: 0px 1px 2px #00000010; height: 52px; }
+
+        #app-header {
+            width: 100%;
+            height: 66px;
+            background: white;
+            padding: 10px 30px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #dcdcdc;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        #app-header .btn-save-header {
+            margin-left: auto;
+            border-radius: 5px;
+            padding: 8px 12px;
+        }
+
+        #app-header .header-title {
+            font-family: 'NanumSquareRound', sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--text-black);
+            line-height: 1;
+        }
     </style>
 </head>
 <body>
+
+<header id="app-header">
+    <img src="icon/ico_niche.svg" width="46" height="46" alt="">
+    <span class="header-title">한글 만들기</span>
+    <button class="btn-save btn-save-header" onclick="saveAsImage()">이미지로 저장</button>
+</header>
 
 <div id="workspace">
     <div id="workspace-hint">아래 한글 자음과 모음을 드래그하여 글자를 만들어보세요!</div>
@@ -141,13 +179,27 @@
 
 <div id="dock">
     <div id="jamo-container">
-        <div>
-            <div class="jamo-label">자음 (19개)</div>
-            <div id="consonants" class="jamo-row"></div>
+        <div class="jamo-group-wrapper">
+            <div class="jamo-subgroup">
+                <div class="jamo-label">자음 (14개)</div>
+                <div id="consonants" class="jamo-row"></div>
+            </div>
+            <div class="jamo-divider"></div>
+            <div class="jamo-subgroup">
+                <div class="jamo-label">복합 자음 (5개)</div>
+                <div id="complex-consonants" class="jamo-row"></div>
+            </div>
         </div>
-        <div>
-            <div class="jamo-label">모음 (21개)</div>
-            <div id="vowels" class="jamo-row"></div>
+        <div class="jamo-group-wrapper">
+            <div class="jamo-subgroup">
+                <div class="jamo-label">모음 (10개)</div>
+                <div id="vowels" class="jamo-row"></div>
+            </div>
+            <div class="jamo-divider"></div>
+            <div class="jamo-subgroup">
+                <div class="jamo-label">복합 모음 (11개)</div>
+                <div id="complex-vowels" class="jamo-row"></div>
+            </div>
         </div>
     </div>
     
@@ -158,14 +210,15 @@
         </div>
         <div class="btn-group">
             <button class="btn-clear" onclick="clearWorkspace()">전체 지우기</button>
-            <button class="btn-save" onclick="saveAsImage()">이미지로 저장</button>
         </div>
     </div>
 </div>
 
 <script>
-    const consonants = "ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎㄲㄸㅃㅆㅉ".split("");
-    const vowels = "ㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣㅐㅒㅔㅖㅘㅙㅚㅝㅞㅟㅢ".split("");
+    const consonants = "ㄱㄴㄷㄹㅁㅂㅅㅇㅈㅊㅋㅌㅍㅎ".split("");
+    const complexConsonants = "ㄲㄸㅃㅆㅉ".split("");
+    const vowels = "ㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ".split("");
+    const complexVowels = "ㅐㅒㅔㅖㅘㅙㅚㅝㅞㅟㅢ".split("");
     const workspace = document.getElementById('workspace');
     const dock = document.getElementById('dock');
     const resizer = document.getElementById('resizer');
@@ -207,9 +260,13 @@
 
     function renderJamo() {
         const conDiv = document.getElementById('consonants');
+        const complexConDiv = document.getElementById('complex-consonants');
         const vowDiv = document.getElementById('vowels');
+        const complexVowDiv = document.getElementById('complex-vowels');
         consonants.forEach(char => createDockJamo(char, conDiv));
+        complexConsonants.forEach(char => createDockJamo(char, complexConDiv));
         vowels.forEach(char => createDockJamo(char, vowDiv));
+        complexVowels.forEach(char => createDockJamo(char, complexVowDiv));
     }
 
     function createDockJamo(char, parent) {
