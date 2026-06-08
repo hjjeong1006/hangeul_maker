@@ -1,0 +1,16 @@
+<svg id="ico_niche" xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46">
+  <rect id="사각형_55360" data-name="사각형 55360" width="46" height="46" fill="none"/>
+  <g id="그룹_24690" data-name="그룹 24690" transform="translate(1)">
+    <path id="패스_44209" data-name="패스 44209" d="M35.076,35.164l-11.2-17.675V7H13.866V17.489L2.668,35.164A5.127,5.127,0,0,0,7.1,43H30.639A5.127,5.127,0,0,0,35.076,35.164Z" transform="translate(0.128)" fill="none" stroke="#040407" stroke-miterlimit="10" stroke-width="1.5"/>
+    <path id="패스_44213" data-name="패스 44213" d="M23.653,24.881H14.093L6.064,37.988a1.211,1.211,0,0,0-.03,1.256,1.177,1.177,0,0,0,1.066.637H30.646a1.177,1.177,0,0,0,1.067-.637,1.216,1.216,0,0,0-.031-1.256Z" transform="translate(0.127 -0.881)" fill="#baa5ff" stroke="#040407" stroke-miterlimit="10" stroke-width="1.5"/>
+    <g id="사각형_55363" data-name="사각형 55363" transform="translate(11 3)" fill="#fff" stroke="#040407" stroke-width="1.5">
+      <rect width="16" height="6" rx="3" stroke="none"/>
+      <rect x="0.75" y="0.75" width="14.5" height="4.5" rx="2.25" fill="none"/>
+    </g>
+    <g id="그룹_24692" data-name="그룹 24692" transform="translate(-1.91 -2.633)">
+      <path id="패스_44204" data-name="패스 44204" d="M36.447,32.62h-13.5v-8.5c0-4.694,3.358-8.5,7.5-8.5h6c4.142,0,7.5,3.806,7.5,8.5s-3.358,8.5-7.5,8.5" transform="translate(-0.037 -0.986)" fill="#040407"/>
+      <path id="패스_44205" data-name="패스 44205" d="M29.9,17.934,26.582,28.308h2.1l.73-2.661H32.76l.724,2.661h2.184L32.35,17.934Zm-.046,6.1.312-1.135q.224-.812.455-1.679t.427-1.708H31.1q.237.825.455,1.7t.455,1.686l.308,1.135Z" transform="translate(0 0.012)" fill="#fff"/>
+      <rect id="사각형_55355" data-name="사각형 55355" width="2.072" height="10.374" transform="translate(36.536 17.945)" fill="#fff"/>
+    </g>
+  </g>
+</svg>
