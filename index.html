@@ -107,7 +107,7 @@
         .jamo-subgroup { display: flex; flex-direction: column; }
         .jamo-divider { width: 1px; background: var(--border-gray); height: 48px; align-self: flex-end; flex-shrink: 0; }
 
-        .jamo-group-wrapper.stacked { flex-direction: column; }
+        .jamo-group-wrapper.stacked { flex-direction: column; align-items: stretch; }
         .jamo-group-wrapper.stacked .jamo-divider { display: none; }
 
         .jamo-item {
@@ -458,9 +458,10 @@
     renderJamo();
     saveState();
 
-    const rowResizeObserver = new ResizeObserver(checkWrap);
-    rowResizeObserver.observe(document.getElementById('jamo-container'));
-    checkWrap();
+    // requestAnimationFrame: 레이아웃 완료 후 측정 (iOS Safari 포함)
+    // window.resize: 화면 회전, 브라우저 창 크기 변경 모두 감지
+    window.addEventListener('resize', checkWrap);
+    requestAnimationFrame(checkWrap);
 </script>
 
 </body>
