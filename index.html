@@ -107,6 +107,9 @@
         .jamo-subgroup { display: flex; flex-direction: column; }
         .jamo-divider { width: 1px; background: var(--border-gray); height: 48px; align-self: flex-end; flex-shrink: 0; }
 
+        .jamo-group-wrapper.stacked { flex-direction: column; }
+        .jamo-group-wrapper.stacked .jamo-divider { display: none; }
+
         .jamo-item {
             width: 64px; height: 56px; background: white;
             border: 1px solid var(--border-gray); border-radius: 10px;
@@ -188,7 +191,7 @@
 
 <div id="dock">
     <div id="jamo-container">
-        <div class="jamo-group-wrapper">
+        <div class="jamo-group-wrapper" id="consonants-wrapper">
             <div class="jamo-subgroup">
                 <div class="jamo-label">자음 (14개)</div>
                 <div id="consonants" class="jamo-row"></div>
@@ -199,7 +202,7 @@
                 <div id="complex-consonants" class="jamo-row"></div>
             </div>
         </div>
-        <div class="jamo-group-wrapper">
+        <div class="jamo-group-wrapper" id="vowels-wrapper">
             <div class="jamo-subgroup">
                 <div class="jamo-label">모음 (10개)</div>
                 <div id="vowels" class="jamo-row"></div>
@@ -436,8 +439,28 @@
         });
     }
 
+    function checkWrap() {
+        const conWrapper = document.getElementById('consonants-wrapper');
+        const vowWrapper = document.getElementById('vowels-wrapper');
+        const conRow = document.getElementById('consonants');
+        const vowRow = document.getElementById('vowels');
+
+        // row 모드에서의 실제 줄 수를 측정하기 위해 stacked를 일시 제거
+        // (offsetHeight 읽기 전에 동기 reflow가 발생하므로 시각적 깜빡임 없음)
+        conWrapper.classList.remove('stacked');
+        vowWrapper.classList.remove('stacked');
+
+        const threshold = 58; // jamo-item 높이 56px 초과 = 2줄
+        conWrapper.classList.toggle('stacked', conRow.offsetHeight > threshold);
+        vowWrapper.classList.toggle('stacked', vowRow.offsetHeight > threshold);
+    }
+
     renderJamo();
     saveState();
+
+    const rowResizeObserver = new ResizeObserver(checkWrap);
+    rowResizeObserver.observe(document.getElementById('jamo-container'));
+    checkWrap();
 </script>
 
 </body>
